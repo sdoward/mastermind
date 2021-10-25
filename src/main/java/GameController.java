@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 
 public class GameController {
@@ -8,9 +7,9 @@ public class GameController {
     private final Scanner scanner = new Scanner(System.in);
 
 
-    public void controlGame(){
+    public void controlGame() {
         displayIntro();
-        GameEngine gameEngine = new GameEngine();
+        GameEngine gameEngine = GameEngine.createGame();
 
         Result result;
         do {
@@ -21,7 +20,7 @@ public class GameController {
         } while (!result.isWon() && !result.isLost());
 
 
-        if(result.isWon()){
+        if (result.isWon()) {
             System.out.println("CONGRATS!!! YOU HAVE WON!");
         } else if (result.isLost()) {
             System.out.println("YOU SUCK!");
@@ -38,7 +37,7 @@ public class GameController {
         }
     }
 
-    private CodeSequence getGuess(){
+    private CodeSequence getGuess() {
         List<Marbles> guess = new ArrayList<>();
         System.out.println("Select four marbles");
         Marbles[] allMarbles = Marbles.values();
@@ -53,7 +52,6 @@ public class GameController {
         }
         return new CodeSequence(guess);
     }
-
 
 
 }
