@@ -2,11 +2,15 @@ import java.util.*;
 
 public class GameEngine {
 
-   private final static int MAX_AMOUNT_GUESSES = 10;
-   private final CodeSequence solutionSequence;
-   private int amountOfGuesses = 0;
+    private final static int MAX_AMOUNT_GUESSES = 10;
+    private final CodeSequence solutionSequence;
+    private int amountOfGuesses = 0;
 
-    public GameEngine() {
+    public GameEngine(CodeSequence codeSequence) {
+        this.solutionSequence = codeSequence;
+    }
+
+    public static GameEngine createGame() {
         Random random = new Random();
         List<Marbles> allMarbles = new ArrayList<>(Arrays.asList(Marbles.values()));
         List<Marbles> generatedMarbles = new ArrayList<>();
@@ -15,8 +19,8 @@ public class GameEngine {
             generatedMarbles.add(allMarbles.get(randomInt));
             allMarbles.remove(randomInt);
         }
-        System.out.println(generatedMarbles);
-        solutionSequence = new CodeSequence(generatedMarbles);
+        CodeSequence solutionSequence = new CodeSequence(generatedMarbles);
+        return new GameEngine(solutionSequence);
     }
 
     public Result checkGuess(CodeSequence guess) {
@@ -26,9 +30,9 @@ public class GameEngine {
         List<Marbles> solutionMarbles = solutionSequence.getMarbles();
         for (int i = 0; i < guessedMarbles.size(); i++) {
             Marbles guessedMarble = guessedMarbles.get(i);
-            if (guessedMarble.equals(solutionMarbles.get(i))){
+            if (guessedMarble.equals(solutionMarbles.get(i))) {
                 resultPins.add(ResultPin.CORRECT);
-            } else if (solutionMarbles.contains(guessedMarble)){
+            } else if (solutionMarbles.contains(guessedMarble)) {
                 resultPins.add(ResultPin.CORRECT_COLOUR);
             } else {
                 resultPins.add(ResultPin.INCORRECT);
