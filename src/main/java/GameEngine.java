@@ -2,7 +2,7 @@ import java.util.*;
 
 public class GameEngine {
 
-    private int maxAmountGuesses;
+    private final int maxAmountGuesses;
     private final CodeSequence solutionSequence;
     private int amountOfGuesses = 0;
 
