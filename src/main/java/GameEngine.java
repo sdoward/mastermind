@@ -2,15 +2,16 @@ import java.util.*;
 
 public class GameEngine {
 
-    private final static int MAX_AMOUNT_GUESSES = 10;
+    private final int maxAmountGuesses;
     private final CodeSequence solutionSequence;
     private int amountOfGuesses = 0;
 
-    public GameEngine(CodeSequence codeSequence) {
+    public GameEngine(CodeSequence codeSequence, int maxAmountGuesses) {
         this.solutionSequence = codeSequence;
+        this.maxAmountGuesses = maxAmountGuesses;
     }
 
-    public static GameEngine createGame() {
+    public static GameEngine createGame(int maxGuesses) {
         Random random = new Random();
         List<Marbles> allMarbles = new ArrayList<>(Arrays.asList(Marbles.values()));
         List<Marbles> generatedMarbles = new ArrayList<>();
@@ -20,7 +21,8 @@ public class GameEngine {
             allMarbles.remove(randomInt);
         }
         CodeSequence solutionSequence = new CodeSequence(generatedMarbles);
-        return new GameEngine(solutionSequence);
+        return new GameEngine(solutionSequence,maxGuesses);
+
     }
 
     public Result checkGuess(CodeSequence guess) {
@@ -40,7 +42,7 @@ public class GameEngine {
         }
         Collections.sort(resultPins);
         amountOfGuesses++;
-        return new Result(resultPins, MAX_AMOUNT_GUESSES - amountOfGuesses);
+        return new Result(resultPins, maxAmountGuesses - amountOfGuesses);
     }
 
 

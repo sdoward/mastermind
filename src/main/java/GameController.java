@@ -5,11 +5,12 @@ import java.util.Scanner;
 public class GameController {
 
     private final Scanner scanner = new Scanner(System.in);
+    private final static int MAX_GUESSES = 8;
 
 
     public void controlGame() {
         displayIntro();
-        GameEngine gameEngine = GameEngine.createGame();
+        GameEngine gameEngine = GameEngine.createGame(MAX_GUESSES);
 
         Result result;
         do {
