@@ -30,4 +30,12 @@ public class Result {
     public String toString() {
         return resultPins.toString() + ", remaining guesses: " + remainingGuesses;
     }
+
+    public List<ResultPin> getResultPins() {
+        return resultPins;
+    }
+
+    public int getRemainingGeusses() {
+        return remainingGuesses;
+    }
 }

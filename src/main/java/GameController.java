@@ -6,10 +6,14 @@ public class GameController {
 
     private final Scanner scanner = new Scanner(System.in);
     private final static int MAX_GUESSES = 8;
+    private final Renderer renderer;
 
+    public GameController(Renderer renderer) {
+        this.renderer = renderer;
+    }
 
     public void controlGame() {
-        displayIntro();
+       renderer.displayIntro();
         GameEngine gameEngine = GameEngine.createGame(MAX_GUESSES);
 
         Result result = null;
@@ -18,7 +22,7 @@ public class GameController {
             try {
                 CodeSequence guess = getGuess();
                 result = gameEngine.checkGuess(guess);
-                System.out.println("Result " + result);
+                renderer.render(result);
             } catch (IllegalStateException e) {
                 System.out.println("Whoopsie, something went wrong");
                 System.exit(0);
@@ -35,14 +39,6 @@ public class GameController {
 
     }
 
-
-    private void displayIntro() {
-        System.out.println("Welcome to mastermind game!");
-        Marbles[] marbles = Marbles.values();
-        for (int i = 0; i < marbles.length; i++) {
-            System.out.println(i + " = " + marbles[i]);
-        }
-    }
 
     private CodeSequence getGuess() {
         List<Marbles> guess = new ArrayList<>();
@@ -66,6 +62,5 @@ public class GameController {
         }
         return new CodeSequence(guess);
     }
-
 
 }
