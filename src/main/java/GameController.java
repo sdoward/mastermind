@@ -12,12 +12,18 @@ public class GameController {
         displayIntro();
         GameEngine gameEngine = GameEngine.createGame(MAX_GUESSES);
 
-        Result result;
+        Result result = null;
         do {
             System.out.println("Make a guess");
-            CodeSequence guess = getGuess();
-            result = gameEngine.checkGuess(guess);
-            System.out.println("Result " + result);
+            try {
+                CodeSequence guess = getGuess();
+                result = gameEngine.checkGuess(guess);
+                System.out.println("Result " + result);
+            } catch (IllegalStateException e) {
+                System.out.println("Whoopsie, something went wrong");
+                System.exit(0);
+            }
+
         } while (!result.isWon() && !result.isLost());
 
 
@@ -43,12 +49,19 @@ public class GameController {
         System.out.println("Select four marbles");
         Marbles[] allMarbles = Marbles.values();
         while (guess.size() != 4) {
-            int guessedInteger = scanner.nextInt();
-            if (guessedInteger >= 0 && guessedInteger < allMarbles.length) {
-                Marbles guessedMarble = allMarbles[guessedInteger];
-                guess.add(guessedMarble);
+
+            if (scanner.hasNextInt()) {
+                int guessedInteger = scanner.nextInt();
+                if (guessedInteger >= 0 && guessedInteger < allMarbles.length) {
+                    Marbles guessedMarble = allMarbles[guessedInteger];
+                    guess.add(guessedMarble);
+                } else {
+                    System.out.println("Invalid guess. Please try again.");
+                }
             } else {
-                System.out.println("Invalid guess. Please try again.");
+                System.out.println("Please enter a number between 0 and " + (allMarbles.length - 1));
+                scanner.next();
+                scanner.close();
             }
         }
         return new CodeSequence(guess);
